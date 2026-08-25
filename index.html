@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>DevVault — Your personal developer resource library</title>
+<meta name="description" content="DevVault: a local-first developer bookmark manager.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <a href="#" class="brand" id="logoHome">
+    <div class="brand-mark">Huzaif</div>
+    <div class="brand-text"><b>Bookmark</b><span>HUZAIF DEVELOPMENT RESOURCE LIBRARY</span></div>
+  </a>
+  <div class="header-search">
+    <svg class="icon-search" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <input type="text" id="globalSearch" placeholder="Search bookmarks, tags, notes…" autocomplete="off">
+    <span class="kbd-hint"><kbd>Ctrl</kbd><kbd>K</kbd></span>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-primary" id="addBookmarkBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span class="lbl">Add Bookmark</span></button>
+    <button class="btn btn-icon" id="themeToggleBtn" aria-label="Toggle theme" title="Toggle theme"></button>
+    <button class="btn btn-icon" id="settingsBtn" aria-label="Settings" title="Settings">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="1.7"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="sidebar-scrim" id="sidebarScrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-section">
+      <div class="sidebar-label">Main</div>
+      <button class="nav-item" data-view="dashboard">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="16" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-view="all">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.7"/></svg>
+        All Bookmarks <span class="count" id="cnt-all">0</span>
+      </button>
+      <button class="nav-item" data-view="favorites">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6L12 3.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        Favorites <span class="count" id="cnt-fav">0</span>
+      </button>
+      <button class="nav-item" data-view="recent">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        Recent
+      </button>
+      <button class="nav-item" data-view="protected">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.7"/></svg>
+        Protected <span class="count" id="cnt-prot">0</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Categories <button id="addCatBtn" title="Add category" aria-label="Add category"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
+      <div class="cat-list" id="catList"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Folders <button id="addFolderBtn" title="Add folder" aria-label="Add folder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
+      <div class="folder-list" id="folderList"></div>
+    </div>
+
+    <div class="storage-note">Bookmarks are stored locally in this browser. Clearing browser data may remove them — export a backup regularly from Settings.</div>
+  </aside>
+
+  <main class="content" id="content"></main>
+</div>
+
+<nav class="bottom-nav">
+  <div class="bottom-nav-row">
+    <button data-view="dashboard" class="bn-btn active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="16" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>Home</button>
+    <button data-action="focus-search" class="bn-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Search</button>
+    <button data-view="favorites" class="bn-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6L12 3.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Favorites</button>
+    <button data-action="open-sidebar" class="bn-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h11M4 12h16M4 19h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Folders</button>
+    <button data-view="settings" class="bn-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82M4.6 9a1.65 1.65 0 0 0-.33-1.82" stroke="currentColor" stroke-width="1.7"/></svg>Settings</button>
+  </div>
+</nav>
+
+<div class="toast-stack" id="toastStack"></div>
+<div id="modalRoot"></div>
+<div id="ctxRoot"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
